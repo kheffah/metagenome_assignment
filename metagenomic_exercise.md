@@ -27,8 +27,7 @@ For the assignment, I would like students to complete at least 3 f the 4 section
 
 The *most important* element of this assignment is not the results themselves but the write-up.  Integrate your code with commentary that will help users understand your choices but dont put so much extra text in that it becomes a chore to read.  For each section that you complete include a succinct intros at the beginning and discssion of results at the end.
 
-Make a new git repository for this project.  Clone the repository in the computer you use for analysis 
-(blnx1, your own laptop etc.).  Add results files you generate to the git repository and sync by pushing 
+Make a new folder within git repository for this project.  Add results files you generate to the git repository and sync by pushing 
 and pulling.  **Be careful not to push very large files back to your repo - like fastq files.**  Github 
 doesn't like it very much.  You may wish to create a simple _make_ file for the project if it helps.  You can create a markdown (.md) file from an Rmd on the command line like this.
 
@@ -218,7 +217,7 @@ efficency and indexed.
 The easist next step is to copy the .bam file, its index (.bai) and the Bcereus fasta file back to a folder on your 
 home computer.  Don't sync through git - the file is too large. If you are on a Mac or Linux machine, go to folder in 
 your home computer where you want to save the file and use the scp command to retrieve the file.  Below is the command 
-I used (with the path to the directories I created).  Windows users see [Suggested SFTP tools](http://ibs574.github.io/docs/setup/#windows-environment). You will need your server pasword.  Substitute <PATH-TO> with the specific path on the server
+I used (with the path to the directories I created).  Windows users see [Suggested SFTP tools](http://ibs574.github.io/docs/setup/#windows-environment). You will need your server pasword.  Substitute <PATH-TO> with the specific path on the server.  (An alternative, probably easier, is to move the files to your own computer using git push and pull commands).
 
      scp myid@blnx1.emory.edu:<PATH-TO>/Bcereus_sorted.bam ./
      scp myid@blnx1.emory.edu:<PATH-TO>/Bcereus_sorted.bam.bai ./
