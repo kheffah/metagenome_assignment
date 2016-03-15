@@ -13,6 +13,7 @@ anthrax3<-as.character(anthrax2)
 pestis2<-as.character(pestis$V2)
 
 library("Biostrings")
+library("ShortRead")
 
 s = readDNAStringSet("EDIT_PATH_HEREkrak_classified_reads")
 RefSeqID = names(s)
