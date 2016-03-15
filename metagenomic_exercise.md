@@ -108,7 +108,7 @@ as a verb, meaning to munch up into a masticated mess.
 To modern data science usage, to *munge* is to find ad hoc solutions to messy formatting problems.
 
 In this case, the supplemental data for the paper contains a valuable excel spreadsheet that summarizes metadata 
-about the 1400+ samples and the results of the species assignment using the Metaphlan tool
+about the 1400+ samples and the results of the species assignment using the [Metaphlan tool](http://huttenhower.sph.harvard.edu/metaphlan)
 (http://www.nature.com/nmeth/journal/v9/n8/full/nmeth.2066.html).  This is an unwieldy data set to work with in 
 Excel. It is better and more reproducible to bring it in to R and work with it there.  Extracting useful 
 information form Excel files is a common time-consuming task in bioinformatics.  
