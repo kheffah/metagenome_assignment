@@ -1,4 +1,4 @@
-reads<-read.table("EDIT_PATH_HERE/krak_classified_reads")
+reads<-read.table("./krak_classified_reads")
 report<-read.table("EDIT_PATH_HERE/kraken_report", sep="\t", as.is=T)
 a<-read.table("EDIT_PATH_HERE/kraken_out",sep = "\t", as.is=T)
 a1<-a[,2:3]
@@ -13,6 +13,7 @@ anthrax3<-as.character(anthrax2)
 pestis2<-as.character(pestis$V2)
 
 library("Biostrings")
+library("ShortRead")
 
 s = readDNAStringSet("EDIT_PATH_HEREkrak_classified_reads")
 RefSeqID = names(s)
