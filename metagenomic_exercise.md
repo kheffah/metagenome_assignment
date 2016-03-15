@@ -55,7 +55,7 @@ SRR1748707 which produced less data).
 ##Part I: Access the data and examine sequence quality
 ssh into the blnx1 server and clone the repo 
 
-     git clone https:/github.com/IBS574/metagenome_assignment
+     git clone "https://github.com/IBS574/metagenome_assignment"
      cd metagenome_assignment
 
 Make an assessment of the quality of the FASTQ data.  Use the scripts you created in a previous practical to create images.  Note the number and length of the reads and any other useful data you can glean.
