@@ -92,9 +92,7 @@ You can perform a BLAST search locally against the NCBI non-redundant nucleotide
      
 Here, I have customized the output format to include the *staxids* field, which is the taxonmy ID of the subject match.  See the blastn -help option for details.  
 
-Pulling out the reads from the FASTQ file will require the BiConductor Biostrings package.  See the script _knight_script.R_ you can use/adapt, which written by GMB student, Anna Knight
-
-Now you can blast the files using.
+The script _knight_script.R_ , written by GMB student, Anna Knight, can be adapted to pull out the reads that match the pathogens. If you run this script you can BLAST the files using:
 
      blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforpestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
      awk '{print $1,$2}' Blastouputoestis2 | sort | uniq
