@@ -55,7 +55,7 @@ SRR1748707 which produced less data).
 ##Part I: Access the data and examine sequence quality
 ssh into the blnx1 server and clone the repo 
 
-     git clone https:/github.com/IBS574/metagenome_assignment
+     git clone "https://github.com/IBS574/metagenome_assignment"
      cd metagenome_assignment
 
 Make an assessment of the quality of the FASTQ data.  Use the scripts you created in a previous practical to create images.  Note the number and length of the reads and any other useful data you can glean.
@@ -92,9 +92,7 @@ You can perform a BLAST search locally against the NCBI non-redundant nucleotide
      
 Here, I have customized the output format to include the *staxids* field, which is the taxonmy ID of the subject match.  See the blastn -help option for details.  
 
-Pulling out the reads from the FASTQ file will require the BiConductor Biostrings package.  See the script _knight_script.R_ you can use/adapt, which written by GMB student, Anna Knight
-
-Now you can blast the files using.
+The script _knight_script.R_ , written by GMB student, Anna Knight, can be adapted to pull out the reads that match the pathogens. If you run this script you can BLAST the files using:
 
      blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforpestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
      awk '{print $1,$2}' Blastouputoestis2 | sort | uniq
@@ -110,7 +108,7 @@ as a verb, meaning to munch up into a masticated mess.
 To modern data science usage, to *munge* is to find ad hoc solutions to messy formatting problems.
 
 In this case, the supplemental data for the paper contains a valuable excel spreadsheet that summarizes metadata 
-about the 1400+ samples and the results of the species assignment using the Metaphlan tool
+about the 1400+ samples and the results of the species assignment using the [Metaphlan tool](http://huttenhower.sph.harvard.edu/metaphlan)
 (http://www.nature.com/nmeth/journal/v9/n8/full/nmeth.2066.html).  This is an unwieldy data set to work with in 
 Excel. It is better and more reproducible to bring it in to R and work with it there.  Extracting useful 
 information form Excel files is a common time-consuming task in bioinformatics.  
