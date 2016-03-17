@@ -31,5 +31,5 @@ if (length(pestis2) >0) {
 }
 if (length(anthrax2) >0) {
   results <- find_matches(anthrax2,reads)
-  write.DNAStringSet(reads[results],"Banthracis.fasta",format=fasta)
+  writeFasta(reads[results],"Banthracis.fasta",format=fasta)
 }
