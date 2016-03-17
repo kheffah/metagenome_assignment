@@ -38,7 +38,7 @@ You can edit the README on the  GitHub site to provide an overview if you have m
 https://help.github.com/articles/markdown-basics/  
 
 ##Data
-I have made sequence data for 4 (out of the more than 1400) samples from the NYC project available on Dropbox.  These data were originally downloaded from NCBI and we have extracted the fastq data.  The data are in zipped folders containing forward and reverse Illumina reads.  Choose one of the four samples to work on: 
+I have made sequence data available for 4 (out of the more than 1400) samples from the NYC project.  These data were originally downloaded from NCBI and we have extracted the fastq data.  The data are in zipped folders containing forward and reverse Illumina reads.  Choose one of the four samples to work on: 
 
 * P00134
 * P00497
