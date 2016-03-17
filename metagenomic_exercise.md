@@ -100,6 +100,8 @@ The script _knight_script.R_ , written by GMB student, Anna Knight, can be adapt
      blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforanthrax.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastoutputanthrax2
      awk '{print $1,$2}' Blastoutputanthrax2 | sort | uniq
 
+Did the reads that Kraken predicted to be _Y. pstis_ or _B. anthracis_ have BLAST matches only to these species?  Were the two pathogens even the best hit for these reads?  Discuss what the results are telling you about species prediction for metagenomics data using k-mers.
+
 ##Part III: Munging the data from supplemental data excel spreadsheet using R
 The word *'munge'* appears to have have come into common usage in 
 [Scotland and Northern England in the 1940s-1950s](http://english.stackexchange.com/questions/207936/what-is-the-etymology-of-munge), 
