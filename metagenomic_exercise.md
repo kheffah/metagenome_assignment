@@ -37,7 +37,7 @@ You can edit the README on the  GitHub site to provide an overview if you have m
 
 https://help.github.com/articles/markdown-basics/ 
 
-Here is a link to a recent [project](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/HMP_coverage.md) that I wrote up in this way.
+Here is a link to a recent [project](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes) that I wrote up in this way.
 
 ##Data
 I have made sequence data available for 4 (out of the more than 1400) samples from the NYC project.  These data were originally downloaded from NCBI and we have extracted the fastq data.  The data are in zipped folders containing forward and reverse Illumina reads.  Choose one of the four samples to work on: 
