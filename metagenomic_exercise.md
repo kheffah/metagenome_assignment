@@ -23,24 +23,30 @@ is to use the rapid k-mer based Kraken software. In this exercise we will compar
 to the published data and also look at the data from a view other angles.
 
 ##Write up results using markdown
-For the assignment, I would like students to complete at least 3 f the 4 sections below.  Think of the instructions in each section as guidelines for an exploratry data analysis.  Feel free to try different approaches/ parameters and explore results in more depth that you think are interesting.
+For the assignment, I would like students to complete at least 3 of the 4 sections below.  Think of the instructions in each section as guidelines for an exploratory data analysis.  Feel free to try different approaches/ parameters and explore results in more depth that you think are interesting.
 
-The *most important* element of this assignment is not the results themselves but the write-up.  Integrate your code with commentary that will help users understand your choices but dont put so much extra text in that it becomes a chore to read.  For each section that you complete include a succinct intros at the beginning and discssion of results at the end.
+The *most important* element of this assignment is not the results themselves but the write-up.  Integrate all the code you used to create your results with commentary that will help users understand your choices but dont put so much extra text in that it becomes a chore to read.  For each section that you complete include a succinct intro at the beginning and brief discussion of results at the end.
 
-Make a new folder within git repository for this project.  Add results files you generate to the git repository and sync by pushing 
-and pulling.  **Be careful not to push very large files back to your repo - like fastq files.**  Github 
-doesn't like it very much.  You may wish to create a simple _make_ file for the project if it helps.  You can create a markdown (.md) file from an Rmd on the command line like this.
+Make a new folder in your home area on the blnx1 server and keep results files you generate. You may wish to create a simple _make_ file for the project if it helps to keep track of the commands that you have used.  
+
+I am asking you to use Markdown becasue this is a tool for creating blogs using sites such as [Github](https://github.com).  I am not asking that you maintain a git repo for your report but if you feel comfortable doing this then go right ahead.
+
+I will leave it up to you how you go about creating your report.  You probably want to create an Rmd file on the blnx1 Rstudio server to record the R commands you use.  Remember you can also have code chunks in python and unix (bash) in Rmd files. You can create a markdown (.md) file from an Rmd on the command line like this.
 
     Rscript -e "library(knitr); knit('my.Rmd')"
 
-You can edit the README on the  GitHub site to provide an overview if you have markdown results files for each section (editing is activated by pressing the pencil icon on the top right corner of the screen; remember tocommit the changes).  Here is a guide to github markdown, it is essentially identical to the Markdown you used previously but with some enhancements. You can also apparently copy most HTML if you chose, and it will be also be rendered.  
+When you have finished your work on the server, I recommend moveing the .md file over to your laptop for the final editing.  Create a new folder for the writeup containing your .md file. You can use Rstudio or any text editor to edit. There are also free markdown editors for [Mac](https://macdown.uranusjr.com) and [Windows/Linux](https://remarkableapp.github.io). The easiest way to add images is to place them in your results directory and use relative paths, e.g
+
+![](./Dna.png)
+
+###Other resources
 
 https://help.github.com/articles/markdown-basics/ 
 
-Here is a link to a recent [project](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes) that I wrote up in this way.
+Link to a recent [project](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes) that I wrote up in this way.
 
 ##Data
-I have made sequence data available for 4 (out of the more than 1400) samples from the NYC project.  These data were originally downloaded from NCBI and we have extracted the fastq data.  The data are in zipped folders containing forward and reverse Illumina reads.  Choose one of the four samples to work on: 
+I have made sequence data available for 4 (out of the more than 1400) samples from the NYC project.  These data were originally downloaded from NCBI and we have extracted the fastq data. Choose one of the four samples to work on: 
 
 * P00134
 * P00497
@@ -78,11 +84,12 @@ Run kraken using the minikraken database.  <FILE1> and <FILE2> are the paths to 
      kraken --db /home/Shared/IBS574/TDR-metagenome-practical/minikraken_20141208 --fastq-input --gzip-compressed --classified-out ./krak_classified_reads --paired <FILE1>.fastq.gz <FILE2>.fastq.gz > ./kraken_out
      kraken-report --db /home/Shared/IBS574/TDR-metagenome-practical/minikraken_20141208 ./kraken_out > kraken_report
 
+_(The first command could take more than an hour to run so you might want to run between the class sessions.)_
+
 Take a look through the three output files you have created (krak\_classified\_reads, kraken.out, kraken\_report) 
 and try to understand what they are.  The projects may have hits against the biodefense pathogens *Bacillus anthracis* 
-and *Yersinia pestis*.  Write a UNIX pipeline or a short ad hoc python script (or combination) that identifies the 
-reads that map to these pathogens.  Save them in a FASTA and run a BLAST search against the NCBI database.  Do these 
-reads have their best match against the biodefense pathogens, or could they come from close relatives?
+and *Yersinia pestis*.  Write a UNIX pipeline or a short ad hoc python/R script (or combination of both) that identifies the 
+reads that map to these pathogens.  Save them in a FASTA and run a BLAST search against the NCBI database.  Do these reads have their best match against the biodefense pathogens, or could they come from close relatives?
 
 _(Hint: it will be helpful to find the NCBI Taxonomy ID associated with each species. This can be found in the 
 kraken\_report file. The fourth column is the taxonomic rank ('S' is for species) and the fiftth column is the NCBI 
@@ -94,7 +101,7 @@ You can perform a BLAST search locally against the NCBI non-redundant nucleotide
      
 Here, I have customized the output format to include the *staxids* field, which is the taxonmy ID of the subject match.  See the blastn -help option for details.  
 
-The script _knight_script.R_ , written by GMB student, Anna Knight, can be adapted to pull out the reads that match the pathogens. If you run this script you can BLAST the files using:
+The script _knight_script.R_ , written by GMB student Anna Knight, can be adapted to pull out the reads that match the pathogens. If you run this script you can BLAST the files using:
 
      blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforpestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
      awk '{print $1,$2}' Blastouputoestis2 | sort | uniq
@@ -169,10 +176,10 @@ on the NYC subway surfaces.  Here we will go back and map the metogenome data di
 of these species using the BWA software tool in order to understand the pattern of sequecne reads mapping against 
 the individual strains.
 
-Get the fasta files of the chromosmes directly from NCBI using curl.
+Get the fasta files of the chromosmes directly from NCBI using _wget_.
 
-     curl "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=146280397&rettype=fasta&retmode=text" > Pstutz.fasta
-     curl "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=30018278&rettype=fasta&retmode=text" > Bcereus.fasta
+     wget -O Pstutz.fasta "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=146280397&rettype=fasta&retmode=text"
+     wget -O Bceresu.fasta "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=30018278&rettype=fasta&retmode=text" 
      
 Choose one of these species (or both if you like).  Follow the path below to run the BWA mem alignment program, 
 changing names and paths appropriately.  You may want to move the analysis to a new separate directory.
