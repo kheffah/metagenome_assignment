@@ -174,6 +174,7 @@ Given the above, try and answer the following questions.
 2. What were the 20 most common bacterial genus discovered in the study (in terms of the number of samples where the genus was identified as > 0% of the microbiome)?
 3.  What was the most common genus found in Brooklyn?
 4.  Make a scatterplot of the proportion of the phyla Firmicutes and Bacteroides in each sample.
+5. (Optional).  Install the R [leaflet](https://rstudio.github.io/leaflet/) package and experiment with making interactive maps of locations of different species using the latitude and longitude coords
 
 ##Part IV BWA run against a commonly encountered bacterial genomes and qualitative analysis using IGV  
 From the previous analysis you will see that *Pseudomonas stutzeri* and *Bacillus cereus* are commonly found 
