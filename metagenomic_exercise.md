@@ -114,7 +114,7 @@ The script _knight_script2.R_ (in the repo for this assignment), written by GMB 
      blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforanthrax.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastoutputanthrax2
      awk '{print $1,$2}' Blastoutputanthrax2 | sort | uniq
 
-Did the reads that Kraken predicted to be _Y. pstis_ or _B. anthracis_ have BLAST matches only to these species?  Were the two pathogens even the best hit for these reads?  Discuss what the results are telling you about species prediction for metagenomics data using k-mers.
+Did the reads that Kraken predicted to be _Y. pestis_ or _B. anthracis_ have BLAST matches only to these species?  Were the two pathogens even the best hit for these reads?  Discuss what the results are telling you about species prediction for metagenomics data using k-mers.
 
 ##Part III: Munging the data from supplemental data excel spreadsheet using R
 The word *'munge'* appears to have have come into common usage in 
@@ -174,10 +174,10 @@ Given the above, try and answer the following questions.
 2. What were the 20 most common bacterial genus discovered in the study (in terms of the number of samples where the genus was identified as > 0% of the microbiome)?
 3.  What was the most common genus found in Brooklyn?
 4.  Make a scatterplot of the proportion of the phyla Firmicutes and Bacteroides in each sample.
-5. (Optional).  Install the R [leaflet](https://rstudio.github.io/leaflet/) package and experiment with making interactive maps of locations of different species using the latitude and longitude coords
+5. (Optional).  Install the R [leaflet](https://rstudio.github.io/leaflet/) package and experiment with making interactive maps of locations of different species using the latitude and longitude coords.
 
 ##Part IV BWA run against a commonly encountered bacterial genomes and perform qualitative analysis using IGV  
-From the previous analysis you will see that *Pseudomonas stutzeri* and *Bacillus cereus* are commonly found 
+From the previous analysis you will see that _Pseudomonas stutzeri_ and _Bacillus cereus_ are commonly found 
 on the NYC subway surfaces.  Here we will go back and map the metogenome data directly on to refernce genomes 
 of these species using the BWA software tool in order to understand the pattern of sequecne reads mapping against 
 the individual strains.
@@ -232,13 +232,13 @@ efficency and indexed.
 The easist next step is to copy the .bam file, its index (.bai) and the Bcereus fasta file back to a folder on your 
 home computer.  Don't sync through git - the file is too large. If you are on a Mac or Linux machine, go to folder in 
 your home computer where you want to save the file and use the scp command to retrieve the file.  Below is the command 
-I used (with the path to the directories I created).  Windows users see [Suggested SFTP tools](http://ibs574.github.io/docs/setup/#windows-environment). You will need your server pasword.  Substitute <PATH-TO> with the specific path on the server.  (An alternative, probably easier, is to move the files to your own computer using git push and pull commands).
+I used (with the path to the directories I created).  You will need your server pasword.  Substitute <PATH-TO> with the specific path on the server.  (An alternative, probably easier, is to move the files to your own computer using git push and pull commands).
 
      scp myid@blnx1.emory.edu:<PATH-TO>/Bcereus_sorted.bam ./
      scp myid@blnx1.emory.edu:<PATH-TO>/Bcereus_sorted.bam.bai ./
      scp myid@blnx1.emory.edu:<PATH-TO>/Bcereus.fasta ./
      
-Next is to visualize the aligned reads using the Broad IGV.  The most current version is 2.3.40.  The free software 
+Next is to visualize the aligned reads using the Broad IGV.  This was partical was tested on version is 2.3.40.  The free software 
 can be downloaded from: 
 
 http://www.broadinstitute.org/igv/home
