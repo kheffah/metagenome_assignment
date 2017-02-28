@@ -64,7 +64,12 @@ SRR1748707 which produced less data).
 ssh into the blnx1 server and clone the repo 
 
      git clone "https://github.com/IBS574/metagenome_assignment"
-     cd metagenome_assignment
+
+If you need to update the repo for the assignment, cd into this folder and use,
+
+    git pull
+
+Create a new folder for the results of your analysis.
 
 Make an assessment of the quality of the FASTQ data.  Use the scripts you created in a previous practical to create images.  Note the number and length of the reads and any other useful data you can glean.
 
