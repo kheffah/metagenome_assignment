@@ -176,7 +176,7 @@ Given the above, try and answer the following questions.
 4.  Make a scatterplot of the proportion of the phyla Firmicutes and Bacteroides in each sample.
 5. (Optional).  Install the R [leaflet](https://rstudio.github.io/leaflet/) package and experiment with making interactive maps of locations of different species using the latitude and longitude coords
 
-##Part IV BWA run against a commonly encountered bacterial genomes and qualitative analysis using IGV  
+##Part IV BWA run against a commonly encountered bacterial genomes and perform qualitative analysis using IGV  
 From the previous analysis you will see that *Pseudomonas stutzeri* and *Bacillus cereus* are commonly found 
 on the NYC subway surfaces.  Here we will go back and map the metogenome data directly on to refernce genomes 
 of these species using the BWA software tool in order to understand the pattern of sequecne reads mapping against 
