@@ -65,7 +65,7 @@ ssh into the blnx1 server and clone the repo
 
      git clone "https://github.com/IBS574/metagenome_assignment"
 
-If you need to update the repo for the assignment, cd into this folder and use,
+If you need to update the repo for the assignment, _cd_ into this folder and use,
 
     git pull
 
