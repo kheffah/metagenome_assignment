@@ -7,8 +7,8 @@ reads<-readDNAStringSet("krak_classified_reads", format ="fasta")
 report<-read.table("kraken_report", sep="\t", as.is=T)
 a<-read.table("kraken_out",sep = "\t", as.is=T)
 a1<-a[,2:3]
-anthrax<-subset(a1, a1$V3==632)
-pestis<-subset(a1, a1$V3==1392)
+anthrax<-subset(a1, a1$V3==1392)
+pestis<-subset(a1, a1$V3==632)
 
 anthrax2<-as.character(anthrax$V2)
 pestis2<-as.character(pestis$V2)
