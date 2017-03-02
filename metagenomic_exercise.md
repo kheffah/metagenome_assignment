@@ -35,7 +35,7 @@ I will leave it up to you how you go about creating your report.  You probably w
 
     Rscript -e "library(knitr); knit('my.Rmd')"
 
-When you have finished your work on the server, I recommend moveing the .md file over to your laptop for the final editing.  Create a new folder for the writeup containing your .md file. You can use Rstudio or any text editor to edit. There are also free markdown editors for [Mac](https://macdown.uranusjr.com) and [Windows/Linux](https://remarkableapp.github.io). The easiest way to add images is to place them in your results directory and use relative paths, e.g
+When you have finished your work on the server, I recommend moving the .md file over to your laptop for the final editing.  Create a new folder for the writeup containing your .md file. You can use Rstudio or any text editor to edit. There are also free markdown editors for [Mac](https://macdown.uranusjr.com) and [Windows/Linux](https://remarkableapp.github.io). The easiest way to add images is to place them in your results directory and use relative paths, e.g
 
 ![](./Dna.png)
 
