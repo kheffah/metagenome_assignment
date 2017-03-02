@@ -108,10 +108,10 @@ Here, I have customized the output format to include the *staxids* field, which 
 
 The script _knight_script2.R_ (in the repo for this assignment), written by GMB student Anna Knight, can be adapted to pull out the reads that match the pathogens. If you run this script you can BLAST the files using:
 
-     blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforpestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
+     blastn -db /home/Shared/IBS574/BlastDB/nt  -query Ypestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
      awk '{print $1,$2}' Blastouputoestis2 | sort | uniq
      
-     blastn -db /home/Shared/IBS574/BlastDB/nt  -query seqforanthrax.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastoutputanthrax2
+     blastn -db /home/Shared/IBS574/BlastDB/nt  -query Banthracis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastoutputanthrax2
      awk '{print $1,$2}' Blastoutputanthrax2 | sort | uniq
 
 Did the reads that Kraken predicted to be _Y. pestis_ or _B. anthracis_ have BLAST matches only to these species?  Were the two pathogens even the best hit for these reads?  Discuss what the results are telling you about species prediction for metagenomics data using k-mers.
