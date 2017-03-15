@@ -1,0 +1,181 @@
+---
+title: "Metagenome assignment for IBS574 - Mohamed Tageldin"
+output: html_notebook
+---
+
+#------------------------------------------------------
+# PART1: Checking FastQ quality scores:
+#------------------------------------------------------
+
+```{r}
+# reset workspace
+rm(list=ls())
+
+# set project paths
+ProjectPath = "/home/mtageld/Desktop/MetaGenome_class/"
+DataPath = paste(ProjectPath, "Data/P00134/", sep="")
+ResultsPath = paste(ProjectPath, "Results/", sep="")
+```
+
+Note, before running this script I copied the files and unzipped them using the command gunzip
+
+```{r}
+library("ShortRead")
+
+# list directory contents
+l = list.files(DataPath)
+
+for (i in 1:length(l)){
+
+arg <- paste(DataPath, toString(l[i]), sep="")
+
+#make sure that exactly arg is entered
+if (length(arg) > 1){
+  stop('Stop: More than one file entered')
+}
+if (length(arg)== 0){
+  stop('Stop: n files entered')
+}
+
+qqF <- qa(arg) #quality assessment
+qqf.pc.qual <- qqF[["perCycle"]]$quality
+
+#pdf(paste(ResultsPath, toString(l[i]), "q-graph.pdf", sep=""))
+print(ShortRead:::.plotCycleQuality(qqf.pc.qual))
+#dev.off()
+
+}
+```
+
+Quality scores are above 30 on average throughout so that's good. Look kind of strange, but OK.
+
+#------------------------------------------------------
+# PART2: Kraken analysis
+#------------------------------------------------------
+
+ran this from the command line after cd'ing to the ResultOath
+
+kraken --db /home/Shared/IBS574/TDR-metagenome-practical/minikraken_20141208 --fastq-input --gzip-compressed --classified-out ./krak_classified_reads --paired /home/Shared/IBS574/TDR-metagenome-practical/P00134/SRR1748708_1.fastq.gz /home/Shared/IBS574/TDR-metagenome-practical/P00134/SRR1748708_2.fastq.gz > ./kraken_out
+
+kraken-report --db /home/Shared/IBS574/TDR-metagenome-practical/minikraken_20141208 ./kraken_out > kraken_report
+
+
+```{r}
+# check the output files
+print(list.files(ResultsPath, "krak*"))
+```
+
+Now moving on to script by Anna Knight to pull out the reads that match the pathogens
+```{r}
+library("Biostrings")
+
+#my krak_classified_reads were in fastq format 
+readPath = paste(ResultsPath, "krak_classified_reads", sep="")
+reportPath = paste(ResultsPath, "kraken_report", sep="")
+outPath = paste(ResultsPath, "kraken_out", sep="")
+
+reads<-readDNAStringSet(readPath, format ="fasta") 
+report<-read.table(reportPath, sep="\t", as.is=T) 
+a<-read.table(outPath,sep = "\t", as.is=T) 
+a1<-a[,2:3] 
+anthrax<-subset(a1, a1$V3==1392) 
+pestis<-subset(a1, a1$V3==632) 
+ 
+anthrax2<-as.character(anthrax$V2) 
+pestis2<-as.character(pestis$V2) 
+ 
+writeXStringSet(reads[names(reads) %in% pestis2],paste(ResultsPath,"Ypestis.fasta",sep="")) 
+writeXStringSet(reads[names(reads) %in% anthrax2],paste(ResultsPath,"Banthracis.fasta",sep="")) 
+```
+
+```{r}
+# check the output files
+print(list.files(ResultsPath, "*.fasta"))
+```
+
+ran this from the command line to BLAST the fasta files to check if they are specific to these pathogenic species or if there are other species that have these same sequences
+ 
+blastn -db /home/Shared/IBS574/BlastDB/nt  -query Ypestis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastouputoestis2
+
+awk '{print $1,$2}' Blastouputoestis2 | sort | uniq
+
+blastn -db /home/Shared/IBS574/BlastDB/nt  -query Banthracis.fasta  -outfmt "6 stitle qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids" >Blastoutputanthrax2
+
+awk '{print $1,$2}' Blastoutputanthrax2 | sort | uniq
+
+```{r}
+# check the output files
+print(list.files(ResultsPath, "Blast*"))
+```
+
+The read for Y. pestis did not match anything (returned empty file, indicating it wasn't present in the dataset I decided to use in the firt place -P00134-) but the reading for B. anthacis resulted in many, many species and strains, so this is not specific.
+
+#------------------------------------------------------
+# PART3: Munging data using R
+#------------------------------------------------------
+
+```{r}
+# opening the excel file
+ temp.csv <- read.csv("/home/Shared/IBS574/TDR-metagenome-practical/DataTable5-metaphlan-metadata_v19.csv",stringsAsFactors = FALSE, header = TRUE)
+
+# Looking at the file
+head(temp.csv)
+```
+
+```{r}
+# isolating genus-level information (columns starting with g_ but not s_)
+genera <- setdiff(grep("g__",colnames(temp.csv)),grep("s__",colnames(temp.csv)))
+Genera <- temp.csv[genera]
+
+# look at it
+head(colnames(Genera))
+```
+
+```{r}
+# What were the 20 most common bacterial genus discovered in the study (in terms of the number of samples where the genus was identified as > 0% of the microbiome)?
+
+# looking at the number of hits for each species
+GenSum <- apply(Genera>0,2,sum)
+# Adding a column index column so when we sort we can keep track of which species was where
+GenSum <- cbind(GenSum,1:length(GenSum))
+# sort based on abundance
+GenSum <- GenSum[order(GenSum[,1]),]
+# Getting indices of most abundant species
+Idx <- GenSum[(dim(GenSum)[1]-19):(dim(GenSum)[1]),2]
+
+colnames(Genera)[Idx]
+```
+
+
+```{r}
+#  What was the most common genus found in Brooklyn?
+
+# Isolate genera from Brooklyn
+Genera_Brooklyn <- Genera[temp.csv$Borough == "Brooklyn",]
+
+# looking at the number of hits for each species
+GenSum <- apply(Genera_Brooklyn>0,2,sum)
+# Adding a column index column so when we sort we can keep track of which species was where
+GenSum <- cbind(GenSum,1:length(GenSum))
+# sort based on abundance
+GenSum <- GenSum[order(GenSum[,1]),]
+# Getting index of most abundant species
+colnames(Genera)[dim(GenSum)[1]]
+```
+
+```{r}
+#  Make a scatterplot of the proportion of the phyla Firmicutes and Bacteroidetes in each sample.
+
+# isolating phylum-level information (columns starting with g_ but not s_)
+ferm <- setdiff(grep("p__Firmicutes",colnames(temp.csv)),grep("c__",colnames(temp.csv)))
+bact <- setdiff(grep("p__Bacteroidetes",colnames(temp.csv)),grep("c__",colnames(temp.csv)))
+Phyla <- temp.csv[c(ferm,bact)]
+
+# Plot
+plot(Phyla[,1], Phyla[,2], main="Fermicutes vs Bacteroides", 
+  	xlab="Fermicutes ", ylab="Bacteroides ", pch=19)
+# Add regression fit line
+abline(lm(Phyla[,1]~Phyla[,2]), col="red")
+```
+
+

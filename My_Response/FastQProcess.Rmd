@@ -1,0 +1,62 @@
+---
+title: "Checking FASTQ qualityfor metagenome assignment"
+author: "Tim Read"
+date: "February 2017"
+output: html_document
+---
+
+Objectives
+- Learn abut Bioconductor ShortRead package
+- Learn abut FASTQ quality score analysis
+- Make a R script that can be run from the UNIX command line
+- Understand how to parse arguments to an R script
+
+```{r}
+# reset workspace
+rm(list=ls())
+
+# set project paths
+ProjectPath = "/home/mtageld/Desktop/MetaGenome_class/"
+DataPath = paste(ProjectPath, "Data/P00134/", sep="")
+ResultsPath = paste(ProjectPath, "Results/", sep="")
+
+
+```
+
+Note, before running this script I copied the files and unzipped them using the command gunzip
+
+```{r}
+library("ShortRead")
+#arg <- commandArgs(trailingOnly=TRUE)
+
+# list directory contents
+l = list.files(DataPath)
+
+for (i in 1:length(l)){
+
+arg <- paste(DataPath, toString(l[i]), sep="")
+
+#make sure that exactly arg is entered
+if (length(arg) > 1){
+  stop('Stop: More than one file entered')
+}
+if (length(arg)== 0){
+  stop('Stop: n files entered')
+}
+
+qqF <- qa(arg) #quality assessment
+qqf.pc.qual <- qqF[["perCycle"]]$quality
+
+pdf(paste(ResultsPath, toString(l[i]), "q-graph.pdf", sep=""))
+print(ShortRead:::.plotCycleQuality(qqf.pc.qual))
+dev.off()
+
+}
+```
+
+On the plot, the reddish lines are quartiles (solid: median, dotted: 25, 75), the green line is the mean. Shading is proportional to number of reads.
+
+```{r}
+
+```
+
